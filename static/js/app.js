@@ -49,16 +49,16 @@ function init(){
 
     d3.json(url).then(function(data) {
      console.log(data);
-     for (let i = 0; i < 50; i++) {
-        let li = d3.select("#selDataset").append("option");
-        li.text(data["names"][i])
+     for (let i = 0; i < data["names"].length; i++) {
+        let opt = d3.select("#selDataset").append("option");
+        opt.text(data["names"][i]);
     console.log(i)
     // let metadata = data["metadata"];
     // let samples = data["samples"];
 
-    createScatter('940');
-    createBar('940');
-    createSummary('940');
+    // createScatter('940');
+    // createBar('940');
+    // createSummary('940');
     
      }
     });
