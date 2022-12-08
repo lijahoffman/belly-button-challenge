@@ -50,7 +50,7 @@ function init(){
     d3.json(url).then(function(data) {
      console.log(data);
      for (let i = 0; i < 50; i++) {
-        let li = d3.select("#selDataSet").append("option");
+        let li = d3.select("#selDataset").append("option");
         li.text(data["names"][i])
     console.log(i)
     // let metadata = data["metadata"];
