@@ -85,17 +85,15 @@ function createScatter(id){
                       }
                     ],
                     layout: {
-                      title: "Higher Risk of Job Automation in Lower Paying Jobs",
                       hovermode: "closest",
                       hoverlabel: { bgcolor: "#FFF" },
                       legend: {orientation: 'h', y: -0.3},
                       xaxis: {
                         tickformat: ".0%",
-                        title: "Automation Probability",
+                        title: "OTU ID",
                         zeroline: false
                       },
                       yaxis: {
-                        title: "Income",
                         zeroline: false
                       }
                     },
@@ -143,11 +141,7 @@ function createBar(id){
 
                 let traceData = [trace1]
     
-                let layout = {
-                    title: "title"
-                }; 
-    
-                Plotly.newPlot("bar", traceData, layout)
+                Plotly.newPlot("bar", traceData)
 
                };
         }
