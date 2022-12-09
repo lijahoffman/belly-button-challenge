@@ -139,19 +139,13 @@ function createBar(id){
 
         })
 
-        
-            
-        
-        
-      
+    
 
         // function selectSamples(){
         //     return data.samples
         // }
 
         // let dataSamples = data.filter(selectSamples)
-
-        console.log(samples[0])
 
 
 
@@ -244,6 +238,41 @@ function createBar(id){
 
 function createSummary(id){
     // code that makes list, paragraph, text/linebreaks at id='sample-meta'
+    const url = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json";
+
+    d3.json(url).then(function(data) {
+     console.log(data);
+
+     let samples = data["samples"];
+
+        for (let i = 0; i < samples.length; i++) {
+            if (samples[i]["id"] === id) {
+                let item1 = d3.select("ul").append("li");
+                item1.text("id: " + samples[i]["id"]);
+
+                let item2 = d3.select("ul").append("li");
+                item2.text("ethnicity: " + samples[i]["ethnicity"]);
+
+                let item3 = d3.select("ul").append("li");
+                item3.text("gender: " + samples[i]["gender"]);
+
+                let item4 = d3.select("ul").append("li");
+                item4.text("age: " + samples[i]["age"]);
+
+                let item5 = d3.select("ul").append("li");
+                item5.text("location: " + samples[i]["location"]);
+
+                let item6 = d3.select("ul").append("li");
+                item6.text("bbtype: " + samples[i]["bbtype"]);
+
+                let item7 = d3.select("ul").append("li");
+                item7.text("wfreq: " + samples[i]["wfreq"]);
+
+               };
+        }
+
+
+    });
 
     // checking to see if function is running
     console.log(`This function generates summary info of ${id} `)
