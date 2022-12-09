@@ -52,16 +52,15 @@ function init(){
      for (let i = 0; i < data["names"].length; i++) {
         let opt = d3.select("#selDataset").append("option");
         opt.text(data["names"][i]);
-    console.log(i)
     // let metadata = data["metadata"];
     // let samples = data["samples"];
 
-    // createScatter('940');
-    // createBar('940');
-    // createSummary('940');
-    
      }
     });
+
+    createScatter('940');
+    createBar('940');
+    createSummary('940');
 
     
 
@@ -104,20 +103,115 @@ function createScatter(id){
 }
 
 function createBar(id){
+
+    const url = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json";
+
+    d3.json(url).then(function(data) {
+        console.log(data);
+
+        let samples = data["samples"];
+
+        for (let i = 0; i < samples.length; i++) {
+            if (samples[i]["id"] === id) {
+                let sampleData = samples[i]
+
+                let otuID = samples[i]["otu_ids"].slice(0,10);
+                let sampleValues = samples[i]["sample_values"].slice(0,10);
+                let otuLabels = samples[i]["otu_labels"];
+    
+                let trace1 = {
+                    x: sampleValues,
+                    type: 'bar', 
+                    orientation: 'h'
+                };
+
+                let traceData = [trace1]
+    
+                let layout = {
+                    title: "title"
+                }; 
+    
+                Plotly.newPlot("bar", traceData, layout)
+
+               };
+    
+        }
+
+        })
+
+        
+            
+        
+        
+      
+
+        // function selectSamples(){
+        //     return data.samples
+        // }
+
+        // let dataSamples = data.filter(selectSamples)
+
+        console.log(samples[0])
+
+
+
+        // for (let i = 0; i < dataArray.length; i++) {
+        //     console.log(i)
+        //     // if (data["samples"]["id"] === id) {
+
+        //     //     function selectSamples(id) {
+        //     //         return person.age < 30;
+        //     //       }
+                  
+        // //           // filter() uses the custom function as its argument
+        // //           let youngSimpsons = simpsons.filter(selectYounger);
+                  
+
+
+
+        // //         let iData = data["samples"][i];
+        // //         let otuIDS = iData["otu_ids"].slice(0,10);
+        // //         let sampleValues = iData["sample_values"].slice(0,10);
+        // //         let otuLabels =  iData["otu_labels"].slice(0,10)
+        //     }
+
+        //     console.log(iData)
+    
+        //  }
+    
+    //     if (data["samples"]["id"] === id) {
+    //         let otuID = data["samples"]["otu_ids"].slice(0,10);
+    //         let sampleValues = data["samples"]["sample_values"].slice(0,10);
+
+
+
+    //     }
+    //     for (let i = 0; i < data["names"].length; i++) {
+    //        let opt = d3.select("#selDataset").append("option");
+    //        opt.text(data["names"][i]);
+    //    // let metadata = data["metadata"];
+    //    // let samples = data["samples"];
+   
+    //     }
+       
+
+
+
+
     // code that makes bar chart at id='bar'
 
-    if (samples["id"] === 940) {
-        let ids = data.samples.otu_ids.slice(0,10);
-        let values = data.samples.sample_values.slice(0,10);
-        let labels = data.samples.otu_labels.slice(0,10);
-    }
+    // if (samples["id"] === 940) {
+    //     let ids = data.samples.otu_ids.slice(0,10);
+    //     let values = data.samples.sample_values.slice(0,10);
+    //     let labels = data.samples.otu_labels.slice(0,10);
+    // }
 
-    let trace1 = {
-        x: values
+    // let trace1 = {
+    //     x: values
 
-    }
+    // }
 
-    Plotly.newPlot("bar", trace1)
+    // Plotly.newPlot("bar", trace1)
     
 
 // // Trace1 for the Greek Data
@@ -154,6 +248,8 @@ function createSummary(id){
     // checking to see if function is running
     console.log(`This function generates summary info of ${id} `)
 }
+
+
 
 
 // function called, runs init instructions
