@@ -62,26 +62,11 @@ function init(){
     createBar('940');
     createSummary('940');
 
-    
-
-
     // this checks that our initial function runs.
     console.log("The Init() function ran")
-
-    // // create dropdown/select
-
-    // d3.selectAll("#selDataset").on("change", getData);
-
-    // function getData() {
-    //     let dropdownMenu = d3.select("#selDataset");
-    //     // Assign the value of the dropdown menu option to a letiable
-    //     let dataset = dropdownMenu.property("value");
-      
-    // run functions to generate plots
-    
-    // }
-
 }
+
+
 
 // function that runs whenever the dropdown is changed
 // this function is in the HTML and is called with an input called 'this.value'
@@ -95,12 +80,83 @@ function optionChanged(newID){
 
 }
 
+
+
 function createScatter(id){
     // code that makes scatter plot at id='bubble'
+    const url = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json";
+
+    d3.json(url).then(function(data) {
+        console.log(data);
+
+        let samples = data["samples"];
+
+        let x = [],
+            y = [],
+            s = [],
+            c = [],
+            t = [];
+
+        for (let i = 0; i < samples.length; i++) {
+            if (samples[i]["id"] === id) {
+                row = samples[i]
+
+                x.push(row["otu_ids"]);
+                y.push(row["sample_values"]);
+                s.push(row["sample_values"]);
+                c.push(row["otu_ids"]);
+                t.push(row["otu_labels"])
+
+                console.log(x[0], y[0])
+
+                Plotly.newPlot('bubble',
+                    {data: [
+                      {
+                        type: "scatter",
+                        mode: "markers",
+                        x: x[0],
+                        y: y[0],
+                        text: t[0],
+                        marker: { 
+                            size: s[0], 
+                            color: c[0]
+                        },
+                     
+                      }
+                    ],
+                    layout: {
+                      title: "Higher Risk of Job Automation in Lower Paying Jobs",
+                      hovermode: "closest",
+                      hoverlabel: { bgcolor: "#FFF" },
+                      legend: {orientation: 'h', y: -0.3},
+                      xaxis: {
+                        tickformat: ".0%",
+                        title: "Automation Probability",
+                        zeroline: false
+                      },
+                      yaxis: {
+                        title: "Income",
+                        zeroline: false
+                      }
+                    },
+                    config: { responsive: true }
+                });
+
+            }
+        }
+     
+
+        
+
+    })
+        
+
 
     // checking to see if function is running
     console.log(`This function generates scatter plot of ${id} `)
 }
+
+
 
 function createBar(id){
 
@@ -113,14 +169,14 @@ function createBar(id){
 
         for (let i = 0; i < samples.length; i++) {
             if (samples[i]["id"] === id) {
-                let sampleData = samples[i]
 
-                let otuID = samples[i]["otu_ids"].slice(0,10);
-                let sampleValues = samples[i]["sample_values"].slice(0,10);
-                let otuLabels = samples[i]["otu_labels"];
+                let otuID = samples[i]["otu_ids"].slice(0,10).map(i => `otu_id ${i}`).reverse();
+                let sampleValues = samples[i]["sample_values"].slice(0,10).reverse();
+                let otuLabels = samples[i]["otu_labels"].slice(0,10).reverse();
     
                 let trace1 = {
                     x: sampleValues,
+                    y: otuID,
                     type: 'bar', 
                     orientation: 'h'
                 };
@@ -134,107 +190,14 @@ function createBar(id){
                 Plotly.newPlot("bar", traceData, layout)
 
                };
-    
         }
-
         })
-
-    
-
-        // function selectSamples(){
-        //     return data.samples
-        // }
-
-        // let dataSamples = data.filter(selectSamples)
-
-
-
-        // for (let i = 0; i < dataArray.length; i++) {
-        //     console.log(i)
-        //     // if (data["samples"]["id"] === id) {
-
-        //     //     function selectSamples(id) {
-        //     //         return person.age < 30;
-        //     //       }
-                  
-        // //           // filter() uses the custom function as its argument
-        // //           let youngSimpsons = simpsons.filter(selectYounger);
-                  
-
-
-
-        // //         let iData = data["samples"][i];
-        // //         let otuIDS = iData["otu_ids"].slice(0,10);
-        // //         let sampleValues = iData["sample_values"].slice(0,10);
-        // //         let otuLabels =  iData["otu_labels"].slice(0,10)
-        //     }
-
-        //     console.log(iData)
-    
-        //  }
-    
-    //     if (data["samples"]["id"] === id) {
-    //         let otuID = data["samples"]["otu_ids"].slice(0,10);
-    //         let sampleValues = data["samples"]["sample_values"].slice(0,10);
-
-
-
-    //     }
-    //     for (let i = 0; i < data["names"].length; i++) {
-    //        let opt = d3.select("#selDataset").append("option");
-    //        opt.text(data["names"][i]);
-    //    // let metadata = data["metadata"];
-    //    // let samples = data["samples"];
-   
-    //     }
-       
-
-
-
-
-    // code that makes bar chart at id='bar'
-
-    // if (samples["id"] === 940) {
-    //     let ids = data.samples.otu_ids.slice(0,10);
-    //     let values = data.samples.sample_values.slice(0,10);
-    //     let labels = data.samples.otu_labels.slice(0,10);
-    // }
-
-    // let trace1 = {
-    //     x: values
-
-    // }
-
-    // Plotly.newPlot("bar", trace1)
-    
-
-// // Trace1 for the Greek Data
-//     let trace1 = {
-//         x: values,
-//         y: greekSearchResults,
-//         text: greekNames,
-//         name: "Greek",
-//         type: "bar"
-    // };
-
-    // let barData = { }
-    // if (samples.samples.id === id) {
-    //         otu_ids : samples.samples.otu_ids.slice(0,10);
-    //         sample_values : samples.samples.sample_values.slice(0,10);
-    //         otu_labels : samples.samples.otu_labels.slice(0,10)
-    //     };
-
-    // let data = sample_values;
-
-    
-
-    
-
 
     // checking to see if function is running
     console.log(`This function generates bar chart of ${id} `)
-
 }
+
+
 
 function createSummary(id){
     // code that makes list, paragraph, text/linebreaks at id='sample-meta'
@@ -243,10 +206,17 @@ function createSummary(id){
     d3.json(url).then(function(data) {
      console.log(data);
 
-     let samples = data["samples"];
+    let samples = data["metadata"];
+
+    console.log("test2", samples[0])
+
+    d3.select("ul").html("");
 
         for (let i = 0; i < samples.length; i++) {
-            if (samples[i]["id"] === id) {
+            if (samples[i]["id"] == id) {
+
+                console.log("test", samples[i])
+
                 let item1 = d3.select("ul").append("li");
                 item1.text("id: " + samples[i]["id"]);
 
